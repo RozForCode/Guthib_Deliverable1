@@ -21,7 +21,6 @@ public class WarGame extends CardGame {
     @Override
     protected void initializeGame() {
         System.out.println("Starting War Game...");
-        System.out.println("Enter Player 1's name:");
         dealInitialCards(26); // Each player gets half the deck
         System.out.println(players.get(0).getName() + " and " + players.get(1).getName() + " have been dealt 26 cards each.");
     }
@@ -29,8 +28,13 @@ public class WarGame extends CardGame {
     @Override
     protected void playGame() {
         while (!players.get(0).getHand().getCards().isEmpty() && !players.get(1).getHand().getCards().isEmpty()) {
-            System.out.println("\nPress Enter to play the next round...");
-            scanner.nextLine(); // Wait for user input to proceed
+            System.out.println("\nPress Enter to play the next round or type 'quit' to exit...");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("quit")) {
+                System.out.println("Game ended by user.");
+                break; // Exit the game if the user types 'quit'
+            }
 
             Card card1 = players.get(0).getHand().getCards().remove(0);
             Card card2 = players.get(1).getHand().getCards().remove(0);
@@ -53,6 +57,7 @@ public class WarGame extends CardGame {
                 System.out.println("It's a tie! Time for WAR!");
                 handleWar();
             }
+            displayPlayerStatus();
         }
     }
 
@@ -63,7 +68,14 @@ public class WarGame extends CardGame {
         } else {
             System.out.println(players.get(0).getName() + " wins the game!");
         }
+        displayPlayerStatus();
         System.out.println("Thanks for playing!");
+    }
+    private void displayPlayerStatus() {
+        System.out.println("\n--- Player Status ---");
+        System.out.println(players.get(0).getName() + " has " + players.get(0).getHand().getCards().size() + " cards.");
+        System.out.println(players.get(1).getName() + " has " + players.get(1).getHand().getCards().size() + " cards.");
+        System.out.println("---------------------\n");
     }
 
     private int getCardValue(Card card) {
