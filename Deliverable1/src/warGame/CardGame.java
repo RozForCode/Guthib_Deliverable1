@@ -11,8 +11,10 @@ package warGame;
  */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class CardGame {
+    private Scanner scanner = new Scanner(System.in);
     protected Deck deck;
     protected List<Player> players;
 
@@ -20,7 +22,9 @@ public abstract class CardGame {
         deck = new Deck();
         players = new ArrayList<>();
         for (int i = 1; i <= numPlayers; i++) {
-            players.add(new Player("Player " + i));
+            System.out.println("Game starting Player enter your name:");
+            String player1Name = scanner.nextLine();
+            players.add(new Player(player1Name));
         }
     }
 
